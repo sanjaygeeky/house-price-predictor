@@ -9,7 +9,7 @@ on:
     - main
 
 jobs:
-  build:
+  workflow:
     runs-on: ubuntu:latest 
     steps:
       - name: Checkout Code
@@ -24,4 +24,3 @@ jobs:
           pip install -r requirements.txt
 
 
-          
