@@ -79,7 +79,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: sanjaygeeky/fastapi:{{ github.sha }}
+          tags: sanjaygeeky/fastapi:${{ github.sha }}
           context: "."
           file: Dockerfile
           platforms: linux/amd64,linux/arm64
