@@ -41,10 +41,16 @@ jobs:
           -v $(pwd)/mlruns:/mlflow/mlruns \
           --name mlflow-server \
           ghcr.io/mlflow/mlflow:latest \
-          mlflow server --backend-store-uri /mlflow/mlruns --default-artifact-root /mlflow/mlruns --host
-          
-      
-      
+          mlflow server --host 0.0.0.0 \
+           --backend-store-uri sqlite:///mlflow.db \
+           --default-artifact-root /tmp/mlruns
+      - name: Wait for MLflow to start
+        run: |
+          echo "Waiting for MLflow to start..."
+          while ! curl -s http://localhost:5555/ > /dev/null; do
+            sleep 10
+          done
+          echo "MLflow is up and running!"
       - name: Train Model
         run: |
           python src/models/train_model.py   \
