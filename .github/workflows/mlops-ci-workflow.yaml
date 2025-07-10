@@ -40,7 +40,7 @@ jobs:
           docker run -d -p 5555:5000 \
           -v $(pwd)/mlruns:/mlflow/mlruns \
           --name mlflow-server \
-          ghcr.io/mlflow/mlflow:2.9.1 \
+          ghcr.io/mlflow/mlflow:latest \
           mlflow server --backend-store-uri /mlflow/mlruns --default-artifact-root /mlflow/mlruns --host
           
       
