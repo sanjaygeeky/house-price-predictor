@@ -24,4 +24,21 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      
+      - name: Run Data Processing steps
+        run: |
+          python src/data/run_processing.py \
+            --input data/raw/house_data.csv \
+            --output data/processed/cleaned_house_data.csv
+      - name: Do Feature Engineering
+        run: |
+          python src/features/run_feature_engineering.py \
+            --input data/processed/cleaned_house_data.csv \
+            --output data/processed/feature_engineered_data.csv    
+      - name: Run Model Training
+        run: |
+          python src/models/run_model_training.py \
+            --config src/models/config.yaml \
+            --data data/processed/feature_house_data.csv \
+            --models-dir models/trained_models
+            --mlflow-tracking-uri http://mlflow:5000
+
