@@ -33,7 +33,10 @@ jobs:
         run: |
           python src/features/run_feature_engineering.py \
             --input data/processed/cleaned_house_data.csv \
-            --output data/processed/feature_engineered_data.csv    
+            --output data/processed/feature_house_data.csv  \
+            --config src/features/config.yaml \
+            --preprocessor src/features/preprocessor.pkl 
+                     
       - name: Run Model Training
         run: |
           python src/models/run_model_training.py \
