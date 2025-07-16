@@ -1,0 +1,11 @@
+name: mlops16Jul25
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main  
+
+      
