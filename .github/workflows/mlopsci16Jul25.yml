@@ -72,7 +72,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: sanjaygeeky/fastapi"{{github.sha}} 
+          tags: sanjaygeeky/fastapi:${{github.sha}} 
           context: .
           file: Dockerfile
              
