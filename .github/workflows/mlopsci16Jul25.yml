@@ -46,6 +46,11 @@ jobs:
             mlflow server --host 0.0.0.0 \
             --backend-store-uri sqlite:///mlflow.db \
             --default-artifact-root /tmp/mlruns
+      
+      - name: Run Model Training
+        run: |
+          python src/models/train_model.py   --config configs/model_config.yaml   --data data/processed/featured_house_data.csv   --models-dir models   --mlflow-tracking-uri http://localhost:5555
+          
            
 
       - name: Cleanup MLflow Tracking Server
@@ -54,8 +59,4 @@ jobs:
           docker rm mlflow-tracking-server 
           docker rmi ghcr.io/mlflow/mlflow:latest 
 
-      - name: Run Model Training
-        run: |
-          python src/models/train_model.py   --config configs/model_config.yaml   --data data/processed/featured_house_data.csv   --models-dir models   --mlflow-tracking-uri http://localhost:5555
-            
              
