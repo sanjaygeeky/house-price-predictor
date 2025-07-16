@@ -2,14 +2,14 @@
 
 services:
   fastapi:
-    image: sanjaygeeky/fastapi:v1
+    image: sanjaygeeky/fastapi:v2
     build: 
       context: .
       dockerfile: Dockerfile
     ports:
       - 8000:8000
   streamlit:
-    image: sanjaygeeky/streamlit:v1
+    image: sanjaygeeky/streamlit:v2
     build:
       context: streamlit_app
       dockerfile: Dockerfile
