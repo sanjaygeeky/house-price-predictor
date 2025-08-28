@@ -36,19 +36,20 @@ jobs:
           --input data/processed/cleaned_house_data.csv \
           --output data/processed/featured_house_data.csv \
           --preprocessor models/trained/preprocessor.pkl
-    - name: model startup
+    - name: setup and start mlflow server
       run: |
+       docker pull ghcr.io/mlflow/mlflow:latest 
        docker run -idt --name mlflow -p 5000:5000 \
         ghcr.io/mlflow/mlflow:latest \
         mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 
     - name: model training
       run: |
+        
         python src/models/train.py \
           --input data/processed/featured_house_data.csv \
           --model_output models/trained/house_price_model.pkl \
           --preprocessor_output models/trained/preprocessor.pkl \
           --mlflow_tracking_uri http://localhost:5000 \
-          --mlflow_experiment_name house_price_prediction
     - name: model evaluation
       run: |
         python src/models/evaluate.py \
@@ -57,13 +58,6 @@ jobs:
           --preprocessor_input models/trained/preprocessor.pkl \
           --mlflow_tracking_uri http://localhost:5000 \
           --mlflow_experiment_name house_price_prediction
-    - name: model deployment
-      run: |
-        python src/models/deploy.py \
-          --model_input models/trained/house_price_model.pkl \
-          --preprocessor_input models/trained/preprocessor.pkl \
-          --deployment_path models/production/house_price_model.pkl \
-          --preprocessor_deployment_path models/production/preprocessor.pkl
     - name: Stop and remove mlflow container
       run: |
         docker stop mlflow
