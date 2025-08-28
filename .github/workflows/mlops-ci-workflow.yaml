@@ -38,9 +38,9 @@ jobs:
           --preprocessor models/trained/preprocessor.pkl
     - name: model startup
       run: |
-       docker run -idt --name mlflow -p 5555:5000 \
-       -v ${{ github.workspace }}/mlruns:/mlflow/mlruns \
-       -e MLFLOW_TRACKING_URI=file:///mlflow mlflow/mlflow:latest mlflow server --backend-store-uri file:///mlflow/mlruns --default-artifact-root /mlflow/mlruns --host  
+       docker run -idt --name mlflow -p 5000:5000 \
+        ghcr.io/mlflow/mlflow:latest \
+        mlflow server --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./mlruns --host 
     - name: model training
       run: |
         python src/models/train.py \
