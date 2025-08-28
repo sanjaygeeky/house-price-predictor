@@ -34,20 +34,12 @@ jobs:
       run: |
         python src/features/engineer.py \
         --input data/processed/cleaned_house_data.csv \
-        --output data/processed/featured_house_data.csv   \ 
-        --preprocessor models/trained/preprocessor.pkl
+        --output data/processed/featured_house_data.csv \ 
+         --preprocessor models/trained/preprocessor.pkl
     - name: model training
       run: |
-        python src/models/train_model.py \
-        --input data/processed/featured_house_data.csv \
-        --model_output models/trained/house_price_model.pkl \
-        --preprocessor_output models/trained/preprocessor.pkl
-    - name: model evaluation
-      run: |
-        python src/models/evaluate.py \
-        --input data/processed/featured_house_data.csv \
-        --model models/trained/house_price_model.pkl \
-        --report_output reports/model_evaluation.txt
-    - name: model deployment
-      run: |
-        echo "Model deployment step (to be implemented)"        
+        python src/models/train_model.py   \
+        --config configs/model_config.yaml   \
+        --data data/processed/featured_house_data.csv   \
+        --models-dir models   \
+        --mlflow-tracking-uri http://localhost:5555
