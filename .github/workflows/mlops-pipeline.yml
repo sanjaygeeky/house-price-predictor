@@ -25,28 +25,28 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Run data processing script
+      - name: Process data
         run: |
           python src/data/run_processing.py   \
           --input data/raw/house_data.csv   \
           --output data/processed/cleaned_house_data.csv
-      - name: Upload processed data artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: cleaned house data  
-          path: data/processed/cleaned_house_data.csv
-      - name: Feature engineering
+    #   - name: Process data
+    #     uses: actions/upload-artifact@v4
+    #     with:
+    #       name: cleaned house data  
+    #       path: data/processed/cleaned_house_data.csv
+      - name: Engineer features
         run: |
           python src/features/engineer.py   \
           --input data/processed/cleaned_house_data.csv   \
           --output data/processed/featured_house_data.csv   \
           --preprocessor models/trained/preprocessor.pkl
-      - name: Upload featured data artifact
+      - name: Upload processed data
         uses: actions/upload-artifact@v4        
         with:
           name: processed-data
           path: data/processed/featured_house_data.csv
-      - name: Upload model trained artifact
+      - name: Upload preprocessor
         uses: actions/upload-artifact@v4        
         with:
           name: model trained
@@ -69,7 +69,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Download processed data artifact
+      - name: Download processed data
         uses: actions/download-artifact@v5
         with:
           name: processed-data
@@ -91,10 +91,10 @@ jobs:
           --data data/processed/featured_house_data.csv   \
           --models-dir models   \
           --mlflow-tracking-uri http://localhost:5000  
-      - name: Upload model trained artifact
+      - name:  Upload trained model
         uses: actions/upload-artifact@v4        
         with:
-          name: model trained
+          name: trained-model
           path: models/ 
       - name: Clean up MLflow
         run: |
@@ -110,9 +110,9 @@ jobs:
       - name: Download model trained artifact
         uses: actions/download-artifact@v5
         with:
-          name: Download trained model  
+          name: trained-model  
           path: models/
-      - name: Download preprocessor
+      - name: preprocessor
         uses: actions/download-artifact@v4
         with:
             name: preprocessor
