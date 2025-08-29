@@ -46,10 +46,10 @@ jobs:
         with:
           name: processed-data
           path: data/processed/featured_house_data.csv
-      - name: preprocessor
+      - name: Upload preprocessor
         uses: actions/upload-artifact@v4        
         with:
-          name: model trained
+          name: preprocessor
           path: models/trained/preprocessor.pkl
   model-training:
     runs-on: ubuntu-latest
@@ -112,7 +112,7 @@ jobs:
         with:
           name: trained-model  
           path: models/
-      - name: preprocessor
+      - name: Download preprocessor
         uses: actions/download-artifact@v4
         with:
             name: preprocessor
