@@ -7,11 +7,11 @@ services:
 
         
   streamlit:
-    image: sanjaygeeky/streamlit:v2
+    image: sanjaygeeky/streamlit:v1
     container_name: streamlit
     ports:
       - "8501:8501"  
     depends_on:
       - fastapi
     environment:
-      API_URL: http://model:8000  
+      API_URL: http://fastapi:8000  
