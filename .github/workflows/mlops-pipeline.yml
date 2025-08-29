@@ -8,7 +8,7 @@ on:
       - main
 
 jobs:
-  data-porcessing:
+  data-processing:
     runs-on: ubuntu-latest
 
     steps:
@@ -53,7 +53,7 @@ jobs:
           path: models/trained/preprocessor.pkl
   model-training:
     runs-on: ubuntu-latest
-    needs: data-porcessing
+    needs: data-processing
 
     steps:
       - name: Checkout repository
@@ -76,8 +76,8 @@ jobs:
           path: data/processed/
       - name: Set MLFlow tracking URI
         run: |
-            docker pull ghcr.io/mlflow/mlflow:latest
-            docker run -d -p 5000:5000 --name mlflow ghcr.io/mlflow/mlflow:latest mlflow server --host 0.0.0.0 --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./tmp/mlruns 
+            docker pull sanjaygeeky/mlflow:latest
+            docker run -d -p 5000:5000 --name mlflow sanjaygeeky/mlflow:latest mlflow server --host 0.0.0.0 --backend-store-uri sqlite:///mlflow.db --default-artifact-root ./tmp/mlruns 
             export MLFLOW_TRACKING_URI=http://localhost:5000
       - name: Wait for MLflow to start
         run:
@@ -114,8 +114,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: ${{ vars.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
       - name: Download model trained artifact
         uses: actions/download-artifact@v5
