@@ -31,7 +31,7 @@ jobs:
           --input data/raw/house_data.csv   \
           --output data/processed/cleaned_house_data.csv
       - name: Upload processed data artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: cleaned house data  
           path: data/processed/cleaned_house_data.csv
@@ -42,12 +42,12 @@ jobs:
           --output data/processed/featured_house_data.csv   \
           --preprocessor models/trained/preprocessor.pkl
       - name: Upload featured data artifact
-        uses: actions/upload-artifact@v3        
+        uses: actions/upload-artifact@v4        
         with:
           name: processed-data
           path: data/processed/featured_housing.csv
       - name: Upload model trained artifact
-        uses: actions/upload-artifact@v3        
+        uses: actions/upload-artifact@v4        
         with:
           name: model trained
           path: models/trained/house_price_model.pkl
@@ -70,7 +70,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Download processed data artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: processed-data
           path: data/processed/
@@ -92,7 +92,7 @@ jobs:
           --models-dir models   \
           --mlflow-tracking-uri http://localhost:5000  
       - name: Upload model trained artifact
-        uses: actions/upload-artifact@v3        
+        uses: actions/upload-artifact@v4        
         with:
           name: model trained   
           path: models/ 
@@ -118,7 +118,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Download model trained artifact
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v5
         with:
           name: model trained     
           path: models/trained/
