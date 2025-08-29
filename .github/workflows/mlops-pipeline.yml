@@ -46,7 +46,7 @@ jobs:
         with:
           name: processed-data
           path: data/processed/featured_house_data.csv
-      - name: Upload preprocessor
+      - name: preprocessor
         uses: actions/upload-artifact@v4        
         with:
           name: model trained
@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3           
 
       - name: Set up Python
         uses: actions/setup-python@v4
